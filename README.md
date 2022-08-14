@@ -1,2 +1,4 @@
-# web-420
-Repository for WEB 420 API Fundamentals at Bellevue University
+# WEB 420 RESTful APIs
+## Contributors
+* Robert Kumar
+* William Watlington
