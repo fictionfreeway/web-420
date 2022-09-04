@@ -1,0 +1,39 @@
+openapi: "3.0.0"
+info:
+  title: Composers API
+  version: "1.0"
+paths:
+  /composers:
+    description: view or add composers from database
+    get:
+      summary: return a list of composer documents
+      description: return list of all composers in database and their details
+      responses:
+        "200":
+          description: composer documents
+        "500":
+          description: server exception
+        "501":
+          description: MongoDB exception
+    post:
+      summary: creates a new composer object
+      description: adds a new composer object and details to the database
+      responses:
+        "200":
+          description: composer added
+        "500":
+          description: server exception
+        "501":
+          description: MongoDB exception
+  /composers/{id}:
+    description: find a specific composer
+    get:
+      summary: return a composer document
+      description: return a composer document from user supplied id information
+      responses:
+        "200":
+          description: composer document in JSON format
+        "500":
+          description: server exception
+        "501":
+          description: MongoDB exception
