@@ -12,7 +12,6 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const mongoose = require("mongoose");
 const personAPI = require("./routes/watlington-person-routes.js");
 
-
 let app = express();
 
 app.set('port', process.env.PORT || 3000);
