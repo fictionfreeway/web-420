@@ -144,5 +144,117 @@ router.get("/composers", async(req, res) => {
     }
 })
 
+/**
+ * createComposer
+ * @openapi
+ * /api/composers/{id}:
+ *   put:
+ *     tags:
+ *       - Composers
+ *     description: API for updating an existing composer document.
+ *     summary: updates existing composer document in database.
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         description: id to update
+ *         schema:
+ *           type: number
+ *           
+ *     requestBody:
+ *       description: composer information
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - firstName
+ *               - lastName
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Composer Document.
+ *       '500':
+ *         description: Server Exception.
+ *       '501':
+ *         description: MongoDB Exception.
+ */
+router.put("/composers/:id", async(req, res) => {
+    try {   
+        Composer.findOne({ id: req.params.id }, function(err, composer) {
+            if(err) {
+                res.status(501).send({
+                    "message": `MongoDB Exception: ${err}`
+                });
+            } else {
+                if(composer) {
+                    composer.set({
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName
+                    })
+                    composer.save(function(err, result){
+                        if (err){
+                            console.log(err);
+                        } else {
+                            res.json(result);
+                        }
+                    });
+                } else {
+                    res.status(401).send({
+                        "message": "Invalid composerId"
+                    })
+                }
+            }
+        })
+    } catch(e) {
+        res.status(500).send({
+            "message": `Server Exception: ${e.message}`
+        });
+    }
+})
+
+/**
+ * deleteComposerById
+ * @openapi
+ * /api/composers/{id}:
+ *   delete:
+ *     tags:
+ *       - Composers
+ *     description: API for updating an existing composer document.
+ *     summary: updates existing composer document in database.
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         description: id to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Composer Document.
+ *       '500':
+ *         description: Server Exception.
+ *       '501':
+ *         description: MongoDB Exception.
+ */
+router.delete("/composers/:id", async(req, res) => {
+    try{
+        Composer.findByIdAndDelete( { '_id': req.params.id }, function(err, result) {
+            if(err) {
+                res.status(501).send({
+                    "message": `MongoDB Exception: ${err}`
+                });
+            } else {
+                res.json(result);
+            }
+        })
+    } catch(e) {
+        res.status(500).send({
+            "message": `Server Exception: ${e.message}`
+        });
+    }
+})
+
 
 module.exports = router;
