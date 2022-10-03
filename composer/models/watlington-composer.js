@@ -1,12 +1,17 @@
-const mongoose = require('mongoose');
+/* 
+Title: watlington-composer.js
+Author: William Watlington
+Date: 02 October 2022
+Description: file to create model for composer
+*/
 
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const composerSchema = new Schema({
-    firstName: String,
-    lastName: String
-}); 
+let composerSchema = new Schema({
+    firstName: { type: String },
+    lastName: { type: String }, 
+    id: { type: Number }
+});
 
-const Composer = mongoose.model('Composer', composerSchema);
-
-exports.Composer = Composer;
+module.exports = mongoose.model("Composer", composerSchema);

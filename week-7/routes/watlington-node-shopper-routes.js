@@ -113,7 +113,7 @@ router.post("/createCustomer", async(req, res) => {
  */
 router.post("/customers/:username/invoices", async(req, res) => {
     try {
-        Customer.findOne({ username: req.params.username}, function(err, user) {
+        Customer.findOne({ username: req.params.username }, function(err, user) {
             if(err) {
                 res.status(501).send({
                     "message": `MongoDB Exception: ${err}`
